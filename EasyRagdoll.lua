@@ -219,4 +219,38 @@ function ERD.SpawnRD(rigidbodyDefinitions, jointDefinitions, renderFunctionCall)
     spawnCs(jointDefinitions)
 end
 
+---Returns the model of a specific rigidbody.<br>
+---This should only ever be used if a ragdoll currently exists.<br>
+---Run `EasyRagdoll.SpawnRD()` before using this.
+---@param rigidbodyName string
+---@return ModelPart
+function ERD.GetModel(rigidbodyName)
+    return ERD.RagdollRBs[rigidbodyName]:getModel()
+end
+---Used to change a single texture on a rigidbody.<br>
+---To get the model, use this together with `EasyRagdoll.GetModel()`.<br><br>
+---`model` - The model you want to change a texture on.<br><br>
+---`texture` - The texture you want to apply. It has to be its name.
+---If you want to get a list of texture names on some model in case you're not sure what it's called, run
+---`<yourModel>:getTextures()`. This will get a list of all textures. If you want to check the name of the first
+---texture on your ragdoll's head, do something like this:
+---```lua
+---local head = EasyRagdoll.GetModel("Head")
+---local headTextures = head:getTextures()
+---print(headTextures[1])
+---```
+---`index` - This defines exactly what texture you want to replace. Each rigidbody may have multiple textures. If
+---you want to change the second texture on the head, do something like this:
+---```lua
+---local head = EasyRagdoll.GetModel("Head")
+---EasyRagdoll.SetTexture(head, "Some Texture Name", 2)
+---```
+---@param model ModelPart
+---@param texture string
+---@param index integer
+---@deprecated Work in progress!
+function ERD.SetTexture(model, texture, index)
+    model:getTextures()[index] = texture
+end
+
 return ERD
